@@ -5,10 +5,11 @@ package sr25519
 
 import (
 	"crypto/rand"
+	"strconv"
 
 	"github.com/ChainSafe/chainbridge-utils/crypto"
-	"github.com/centrifuge/go-substrate-rpc-client/signature"
-	"github.com/centrifuge/go-substrate-rpc-client/types"
+	"github.com/centrifuge/go-substrate-rpc-client/v2/signature"
+	"github.com/centrifuge/go-substrate-rpc-client/v2/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -28,7 +29,8 @@ func GenerateKeypair(network string) (*Keypair, error) {
 }
 
 func NewKeypairFromSeed(seed, network string) (*Keypair, error) {
-	kp, err := signature.KeyringPairFromSecret(seed, network)
+	net, _ := strconv.ParseInt(network, 10, 8)
+	kp, err := signature.KeyringPairFromSecret(seed, uint8(net))
 	return &Keypair{&kp}, err
 }
 
