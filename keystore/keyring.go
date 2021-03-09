@@ -5,11 +5,10 @@ package keystore
 
 import (
 	"fmt"
-
-	"github.com/ChainSafe/chainbridge-utils/crypto"
-	"github.com/ChainSafe/chainbridge-utils/crypto/secp256k1"
-	"github.com/ChainSafe/chainbridge-utils/crypto/sr25519"
-	"github.com/centrifuge/go-substrate-rpc-client/signature"
+	"github.com/rjman-self/platdot-utils/crypto"
+	"github.com/rjman-self/platdot-utils/crypto/secp256k1"
+	"github.com/rjman-self/platdot-utils/crypto/sr25519"
+	"github.com/rjmand/go-substrate-rpc-client/v2/signature"
 )
 
 // The Constant "keys". These are the name that the keys are based on. This can be expanded, but
@@ -27,6 +26,8 @@ const EthChain = "ethereum"
 const SubChain = "substrate"
 
 var TestKeyRing *TestKeyRingHolder
+
+
 
 var AliceSr25519 = sr25519.NewKeypairFromKRP(signature.KeyringPair{
 	URI:       "//Alice",

@@ -5,12 +5,12 @@ package sr25519
 
 import (
 	"crypto/rand"
+	"github.com/rjmand/go-substrate-rpc-client/v2/signature"
+	"github.com/rjmand/go-substrate-rpc-client/v2/types"
 	"strconv"
 
-	"github.com/ChainSafe/chainbridge-utils/crypto"
-	"github.com/centrifuge/go-substrate-rpc-client/v2/signature"
-	"github.com/centrifuge/go-substrate-rpc-client/v2/types"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/rjman-self/platdot-utils/crypto"
 )
 
 var _ crypto.Keypair = &Keypair{}
