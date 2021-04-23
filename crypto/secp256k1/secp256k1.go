@@ -102,3 +102,8 @@ func (kp *Keypair) PublicKey() string {
 func (kp *Keypair) PrivateKey() *ecdsa.PrivateKey {
 	return kp.private
 }
+
+// PrivateKey returns the keypair's private key
+func (kp *Keypair) GetPrivateKey() *ecdsa.PrivateKey {
+	return kp.private
+}
