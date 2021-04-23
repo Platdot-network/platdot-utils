@@ -9,7 +9,7 @@ import (
 	"github.com/rjmand/go-substrate-rpc-client/v2/types"
 	"strconv"
 
-	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/hacpy/go-ethereum/common/hexutil"
 	"github.com/rjman-self/platdot-utils/crypto"
 )
 
