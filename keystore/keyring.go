@@ -5,10 +5,10 @@ package keystore
 
 import (
 	"fmt"
-	"github.com/rjman-self/platdot-utils/crypto"
-	"github.com/rjman-self/platdot-utils/crypto/secp256k1"
-	"github.com/rjman-self/platdot-utils/crypto/sr25519"
-	"github.com/rjmand/go-substrate-rpc-client/v2/signature"
+	"github.com/rjman-ljm/platdot-utils/crypto"
+	"github.com/rjman-ljm/platdot-utils/crypto/secp256k1"
+	"github.com/rjman-ljm/platdot-utils/crypto/sr25519"
+	"github.com/centrifuge/go-substrate-rpc-client/v3/signature"
 )
 
 // The Constant "keys". These are the name that the keys are based on. This can be expanded, but

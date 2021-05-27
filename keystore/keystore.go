@@ -29,7 +29,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rjman-self/platdot-utils/crypto"
+	"github.com/rjman-ljm/platdot-utils/crypto"
 )
 
 const EnvPassword = "KEYSTORE_PASSWORD"

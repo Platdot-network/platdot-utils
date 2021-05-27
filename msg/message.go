@@ -22,10 +22,12 @@ func (n Nonce) Big() *big.Int {
 	return big.NewInt(int64(n))
 }
 
+var MultiSigTransfer TransferType = "MultiSigTransfer"
+var NativeTransfer TransferType = "NativeTransfer"
 var FungibleTransfer TransferType = "FungibleTransfer"
 var NonFungibleTransfer TransferType = "NonFungibleTransfer"
 var GenericTransfer TransferType = "GenericTransfer"
-var NativeTransfer TransferType = "NativeTransfer"
+
 
 // Message is used as a generic format to communicate between chains
 type Message struct {
@@ -37,11 +39,11 @@ type Message struct {
 	Payload      []interface{} // data associated with event sequence
 }
 
-func NewFungibleTransfer(source, dest ChainId, nonce Nonce, amount *big.Int, resourceId ResourceId, recipient []byte) Message {
+func NewMultiSigTransfer(source, dest ChainId, nonce Nonce, amount *big.Int, resourceId ResourceId, recipient []byte) Message {
 	return Message{
 		Source:       source,
 		Destination:  dest,
-		Type:         FungibleTransfer,
+		Type:         MultiSigTransfer,
 		DepositNonce: nonce,
 		ResourceId:   resourceId,
 		Payload: []interface{}{
@@ -56,6 +58,20 @@ func NewNativeTransfer(source, dest ChainId, nonce Nonce, amount *big.Int, resou
 		Source:       source,
 		Destination:  dest,
 		Type:         NativeTransfer,
+		DepositNonce: nonce,
+		ResourceId:   resourceId,
+		Payload: []interface{}{
+			amount.Bytes(),
+			recipient,
+		},
+	}
+}
+
+func NewFungibleTransfer(source, dest ChainId, nonce Nonce, amount *big.Int, resourceId ResourceId, recipient []byte) Message {
+	return Message{
+		Source:       source,
+		Destination:  dest,
+		Type:         FungibleTransfer,
 		DepositNonce: nonce,
 		ResourceId:   resourceId,
 		Payload: []interface{}{

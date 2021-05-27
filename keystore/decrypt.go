@@ -10,9 +10,9 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	"github.com/rjman-self/platdot-utils/crypto"
-	"github.com/rjman-self/platdot-utils/crypto/secp256k1"
-	"github.com/rjman-self/platdot-utils/crypto/sr25519"
+	"github.com/rjman-ljm/platdot-utils/crypto"
+	"github.com/rjman-ljm/platdot-utils/crypto/secp256k1"
+	"github.com/rjman-ljm/platdot-utils/crypto/sr25519"
 )
 
 // Decrypt uses AES to decrypt ciphertext with the symmetric key deterministically created from `password`

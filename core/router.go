@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/rjman-self/platdot-utils/msg"
+	"github.com/rjman-ljm/platdot-utils/msg"
 	log "github.com/ChainSafe/log15"
 )
 

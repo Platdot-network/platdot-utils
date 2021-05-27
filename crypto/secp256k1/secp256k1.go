@@ -9,7 +9,7 @@ import (
 	"github.com/hacpy/go-ethereum/common"
 	"github.com/hacpy/go-ethereum/common/hexutil"
 	secp256k1 "github.com/hacpy/go-ethereum/crypto"
-	"github.com/rjman-self/platdot-utils/crypto"
+	"github.com/rjman-ljm/platdot-utils/crypto"
 )
 
 var _ crypto.Keypair = &Keypair{}

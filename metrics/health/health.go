@@ -11,9 +11,9 @@ import (
 	"path"
 	"time"
 
-	"github.com/rjman-self/platdot-utils/core"
-	"github.com/rjman-self/platdot-utils/msg"
 	log "github.com/ChainSafe/log15"
+	"github.com/rjman-ljm/platdot-utils/core"
+	"github.com/rjman-ljm/platdot-utils/msg"
 )
 
 type httpMetricServer struct {

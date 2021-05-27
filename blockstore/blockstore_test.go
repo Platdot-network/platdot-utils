@@ -9,8 +9,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/rjman-self/platdot-utils/keystore"
-	"github.com/rjman-self/platdot-utils/msg"
+	"github.com/rjman-ljm/platdot-utils/keystore"
+	"github.com/rjman-ljm/platdot-utils/msg"
 )
 
 func TestSaveAndLoad(t *testing.T) {

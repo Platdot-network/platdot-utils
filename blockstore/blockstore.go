@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/rjman-self/platdot-utils/msg"
+	"github.com/rjman-ljm/platdot-utils/msg"
 )
 
 const PathPostfix = ".chainbridge/blockstore"

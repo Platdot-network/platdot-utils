@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rjman-self/platdot-utils/msg"
+	"github.com/rjman-ljm/platdot-utils/msg"
 	"github.com/ChainSafe/log15"
 )
 
