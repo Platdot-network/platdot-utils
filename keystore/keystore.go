@@ -27,9 +27,9 @@ package keystore
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/rjman-ljm/platdot-utils/crypto"
+	"github.com/rjman-ljm/platdot-utils/crypto/aes"
+	"os"
 )
 
 const EnvPassword = "KEYSTORE_PASSWORD"
@@ -41,7 +41,7 @@ var keyMapping = map[string]string{
 
 // KeypairFromAddress attempts to load the encrypted key file for the provided address,
 // prompting the user for the password.
-func KeypairFromAddress(addr, chainType, path string, insecure bool) (crypto.Keypair, error) {
+func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath string) (crypto.Keypair, error) {
 	if insecure {
 		return insecureKeypairFromAddress(path, chainType)
 	}
@@ -52,10 +52,26 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool) (crypto.Key
 	}
 
 	var pswd []byte
+	var err error
 	if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
 		pswd = []byte(pswdStr)
+	} else if aes.CheckPwdCacheExist(cachePath, addr) {
+		data, err := aes.GetPwdByReadCache(cachePath, addr)
+		if err != nil {
+			return nil, err
+		}
+		pswd = []byte(data)
+
+		fmt.Printf("read pwd from cache, path is %v\n", cachePath)
 	} else {
 		pswd = GetPassword(fmt.Sprintf("Enter password for key %s:", path))
+
+		/// Cache Pwd
+		err = aes.EncryptByAesAndWriteToFile(cachePath, string(pswd), addr)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Printf("pwd is cached, path is %v\n", cachePath)
 	}
 
 	kp, err := ReadFromFileAndDecrypt(path, pswd, keyMapping[chainType])
