@@ -27,9 +27,9 @@ package keystore
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/rjman-ljm/platdot-utils/crypto"
+	"github.com/rjman-ljm/platdot-utils/crypto/aes"
+	"os"
 )
 
 const EnvPassword = "KEYSTORE_PASSWORD"
@@ -52,10 +52,21 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool) (crypto.Key
 	}
 
 	var pswd []byte
+	var err error
 	if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
 		pswd = []byte(pswdStr)
+	} else if aes.CheckPwdCacheExist(addr) {
+		data, err := aes.GetPwdByReadCache(addr)
+		if err != nil {
+			return nil, err
+		}
+		pswd = []byte(data)
 	} else {
 		pswd = GetPassword(fmt.Sprintf("Enter password for key %s:", path))
+		err = aes.EncryptByAesAndWriteToFile(string(pswd), addr)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	kp, err := ReadFromFileAndDecrypt(path, pswd, keyMapping[chainType])
