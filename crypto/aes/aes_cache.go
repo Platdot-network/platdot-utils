@@ -102,9 +102,9 @@ func DecryptByAes(data string, pwdKey []byte) ([]byte, error) {
 	return AesDecrypt(dataByte, pwdKey)
 }
 
-func EncryptByAesAndWriteToFile(pwdCachePath string, addr string, pwd string) (string, error) {
+func EncryptByAesAndWriteToFile(pwdCachePath string, addr string, pwd string, key string) (string, error) {
 	//Cache password
-	pwdStr, err := EncryptByAes([]byte(pwd), []byte(addr)[:32])
+	pwdStr, err := EncryptByAes([]byte(pwd), []byte(key))
 
 	path, err := cacheDir(pwdCachePath)
 	if err != nil {
@@ -137,7 +137,7 @@ func CheckPwdCacheExist(pwdCachePath string, addr string) bool {
 	return true
 }
 
-func GetPwdByReadCache(pwdCachePath string, addr string) (string, error) {
+func GetPwdByReadCache(pwdCachePath string, addr string, key string) (string, error) {
 	path, err := cacheDir(pwdCachePath)
 	if err != nil {
 		return "", err
@@ -154,7 +154,7 @@ func GetPwdByReadCache(pwdCachePath string, addr string) (string, error) {
 		return "", fmt.Errorf("read to fd fail, %s", err)
 	}
 
-	pwd, err := DecryptByAes(string(pwdData), []byte(addr)[:32])
+	pwd, err := DecryptByAes(string(pwdData), []byte(key))
 	if err != nil {
 		return "", err
 	}

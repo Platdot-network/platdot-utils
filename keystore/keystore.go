@@ -41,7 +41,7 @@ var keyMapping = map[string]string{
 
 // KeypairFromAddress attempts to load the encrypted key file for the provided address,
 // prompting the user for the password.
-func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath string) (crypto.Keypair, error) {
+func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath string, pwdkey string) (crypto.Keypair, error) {
 	if insecure {
 		return insecureKeypairFromAddress(path, chainType)
 	}
@@ -56,7 +56,7 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath s
 	if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
 		pswd = []byte(pswdStr)
 	} else if aes.CheckPwdCacheExist(cachePath, addr) {
-		data, err := aes.GetPwdByReadCache(cachePath, addr)
+		data, err := aes.GetPwdByReadCache(cachePath, addr, pwdkey)
 		if err != nil {
 			return nil, err
 		}
@@ -67,7 +67,7 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath s
 		pswd = GetPassword(fmt.Sprintf("Enter password for key %s:", path))
 
 		/// Cache Pwd
-		_, err := aes.EncryptByAesAndWriteToFile(cachePath, addr, string(pswd))
+		_, err := aes.EncryptByAesAndWriteToFile(cachePath, addr, string(pswd), pwdkey)
 		if err != nil {
 			return nil, err
 		}

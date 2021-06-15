@@ -7,9 +7,7 @@ import (
 )
 
 var addr = "0x8114B66d176B2BebB84729385709445166D7A463"
-var pwd = "testPwd"
-
-var rawData = []byte("RawData")
+var rawData = []byte("111")
 var rawKey = []byte(addr)[:32]
 
 func TestAes(t *testing.T) {
@@ -30,16 +28,16 @@ func TestAesTime(t *testing.T) {
 
 func TestCachePwd(t *testing.T) {
 	if CheckPwdCacheExist(DefaultCacheDirPath, addr) {
-		data, err := GetPwdByReadCache(DefaultCacheDirPath, addr)
+		data, err := GetPwdByReadCache(DefaultCacheDirPath, addr, string(rawKey))
 		if err != nil {
 			fmt.Printf("err is %v\n", err)
 		}
-		fmt.Printf("Read %v, pwd is %v\n", data, []byte(data))
+		fmt.Printf("Read %v, pwd is %v\n", data, rawData)
 	} else {
-		data, err := EncryptByAesAndWriteToFile(DefaultCacheDirPath, addr, pwd)
+		data, err := EncryptByAesAndWriteToFile(DefaultCacheDirPath, addr, string(rawData), string(rawKey))
 		if err != nil {
 			fmt.Printf("err is %v\n", err)
 		}
-		fmt.Printf("Write %v, data is %v\n", pwd, data)
+		fmt.Printf("Write %v, data is %v\n", string(rawData), data)
 	}
 }
