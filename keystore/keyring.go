@@ -27,8 +27,6 @@ const SubChain = "substrate"
 
 var TestKeyRing *TestKeyRingHolder
 
-
-
 var AliceSr25519 = sr25519.NewKeypairFromKRP(signature.KeyringPair{
 	URI:       "//Alice",
 	Address:   "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
