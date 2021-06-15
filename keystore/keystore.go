@@ -41,7 +41,7 @@ var keyMapping = map[string]string{
 
 // KeypairFromAddress attempts to load the encrypted key file for the provided address,
 // prompting the user for the password.
-func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath string, pwdkey string) (crypto.Keypair, error) {
+func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath string, pwdKey string) (crypto.Keypair, error) {
 	if insecure {
 		return insecureKeypairFromAddress(path, chainType)
 	}
@@ -53,30 +53,34 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath s
 
 	var pswd []byte
 	var err error
+	var newInput = false
 	if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
 		pswd = []byte(pswdStr)
 	} else if aes.CheckPwdCacheExist(cachePath, addr) {
-		data, err := aes.GetPwdByReadCache(cachePath, addr, pwdkey)
+		data, err := aes.GetPwdByReadCache(cachePath, addr, pwdKey)
 		if err != nil {
 			return nil, err
 		}
 		pswd = []byte(data)
-
-		fmt.Printf("read pwd from cache, path is %v\n", cachePath)
 	} else {
 		pswd = GetPassword(fmt.Sprintf("Enter password for key %s:", path))
-
-		/// Cache Pwd
-		_, err := aes.EncryptByAesAndWriteToFile(cachePath, addr, string(pswd), pwdkey)
-		if err != nil {
-			return nil, err
-		}
-		fmt.Printf("pwd is cached, path is %v\n", cachePath)
+		newInput = true
 	}
 
 	kp, err := ReadFromFileAndDecrypt(path, pswd, keyMapping[chainType])
 	if err != nil {
 		return nil, err
+	}
+
+	/// Cache Correct Pwd
+	if newInput {
+		_, err = aes.EncryptByAesAndWriteToFile(cachePath, addr, string(pswd), pwdKey)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Printf("pwd is cached, path is %v\n", path)
+	} else {
+		fmt.Printf("read pwd from cache, path is %v\n", path)
 	}
 
 	return kp, nil
