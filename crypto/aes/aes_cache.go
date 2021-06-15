@@ -133,7 +133,7 @@ func CheckPwdCacheExist(pwdCachePath string, addr string) bool {
 		return false
 	}
 
-	fmt.Printf("pwd file found: %s\n", cachePath)
+	//fmt.Printf("pwd file found: %s\n", cachePath)
 	return true
 }
 
