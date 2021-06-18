@@ -56,7 +56,7 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath s
 	var newInput = false
 	if pswdStr := os.Getenv(EnvPassword); pswdStr != "" {
 		pswd = []byte(pswdStr)
-	} else if aes.CheckPwdCacheExist(cachePath, addr) {
+	} else if aes.CheckPwdCacheExist(cachePath, addr) && pwdKey != "" {
 		data, err := aes.GetPwdByReadCache(cachePath, addr, pwdKey)
 		if err != nil {
 			return nil, err
@@ -73,7 +73,7 @@ func KeypairFromAddress(addr, chainType, path string, insecure bool, cachePath s
 	}
 
 	/// Cache Correct Pwd
-	if newInput {
+	if newInput && pwdKey != "" {
 		_, err = aes.EncryptByAesAndWriteToFile(cachePath, addr, string(pswd), pwdKey)
 		if err != nil {
 			return nil, err
