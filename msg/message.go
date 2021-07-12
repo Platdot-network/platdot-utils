@@ -16,6 +16,10 @@ func (r ResourceId) Hex() string {
 	return fmt.Sprintf("%x", r)
 }
 
+func (r ResourceId) Shorten() String {
+	return r[29:]
+}
+
 type Nonce uint64
 
 func (n Nonce) Big() *big.Int {
@@ -27,7 +31,6 @@ var NativeTransfer TransferType = "NativeTransfer"
 var FungibleTransfer TransferType = "FungibleTransfer"
 var NonFungibleTransfer TransferType = "NonFungibleTransfer"
 var GenericTransfer TransferType = "GenericTransfer"
-
 
 // Message is used as a generic format to communicate between chains
 type Message struct {
