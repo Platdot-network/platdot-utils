@@ -16,7 +16,7 @@ func (r ResourceId) Hex() string {
 	return fmt.Sprintf("%x", r)
 }
 
-func (r ResourceId) Shorten() String {
+func (r ResourceId) Shorten() []byte {
 	return r[29:]
 }
 
